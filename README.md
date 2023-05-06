@@ -19,24 +19,24 @@ CRUD 기능,
 typedef struct{
 char name[20];
 char result[30];
-}Human ;
+}Human ; <br/>
 
 
 10개 이상 함수 정의 및 개발
-insertUser()
-deleteUser()
-readUser()
-updateUser()
+insertUser() <br/>
+deleteUser() <br/>
+readUser() <br/> 
+updateUser() <br/>
 
-insertPenalty()
-deletePenalty()
-readPenalty()
-updatePenalty()
+insertPenalty() <br/>
+deletePenalty() <br/>
+readPenalty() <br/> 
+updatePenalty()  <br/>
 
-runGame()
-resultGame()
+runGame() <br/>
+resultGame() <br/>
 
-saveResult()
-loadResult()
+saveResult() <br/>
+loadResult() <br/>
 
-searchResult()
+searchResult() <br/>
