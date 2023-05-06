@@ -22,7 +22,7 @@ char result[30];
 }Human ; <br/>
 
 
-10개 이상 함수 정의 및 개발
+##10개 이상 함수 정의 및 개발 <br/>
 insertUser() <br/>
 deleteUser() <br/>
 readUser() <br/> 
