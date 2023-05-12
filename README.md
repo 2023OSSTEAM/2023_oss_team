@@ -14,12 +14,18 @@ CRUD 기능,
 
 -데이터 파일 저장/읽어오기 (게임결과-이름형식의 result.txt)
 
--검색메뉴(결과를 검색할 수 있도록- 날짜로 검색해서/20230504)
+-검색메뉴(결과를 검색할 수 있도록- 날짜로 검색해서/20230504)<br/>
 
-typedef struct{
-char name[20];
-char result[30];
-}Human ; <br/>
+
+typedef struct{ <br/>
+char name[20]; <br/>
+char result[30];<br/>
+}Human ; <br/><br/>
+
+typedef struct{ <br/>
+char pnaltyName[20]; <br/>
+char period[10];<br/>
+}Penalty ; <br/><br/>
 
 
 ## 10개 이상 함수 정의 및 개발 <br/>
