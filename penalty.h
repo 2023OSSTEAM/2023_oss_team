@@ -1,0 +1,5 @@
+int createPenalty(Penalty *u)
+void listPenalty(Penalty[] *u, int count)
+int updatePenalty(Penalty *u)
+int selectMenu()
+int selectDataNo(Penalty[] *penalty, int count)
