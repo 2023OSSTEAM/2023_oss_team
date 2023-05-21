@@ -48,7 +48,7 @@ int selectUserMenu()
     return menu ;    
 }
 
-int selectDataNo(User * user[], int count)
+int selectUserDataNo(User * user[], int count)
 {
     int num ;
     listUser(user, count) ;
@@ -98,7 +98,7 @@ int user(User * users[], int cnt)
         }
         else if (menu == 3)
         {
-            int no = selectDataNo(user, index) ;
+            int no = selectUserDataNo(user, index) ;
             if (no == 0)
             {
                 printf("=> 취소됨!\n") ;
@@ -108,7 +108,7 @@ int user(User * users[], int cnt)
         }
         else if (menu == 4)
         {
-            int no = selectDataNo(user, index) ;
+            int no = selectUserDataNo(user, index) ;
             if (no == 0)
             {
                 printf("=> 취소됨!\n") ;

@@ -46,7 +46,7 @@ int selectPenaltyMenu()
     return menu ;
 }
 
-int selectDataNo(Penalty * penalty[], int count)
+int selectPenaltyDataNo(Penalty * penalty[], int count)
 {
     int num ;
     listPenalty(penalty, count) ;
@@ -96,7 +96,7 @@ int penalty(Penalty * penalties[], int cnt)
         }
         else if (menu == 3)
         {
-            int no = selectDataNo(penalty, index) ;
+            int no = selectPenaltyDataNo(penalty, index) ;
             if (no == 0) 
             {
                 printf("=> 취소됨!\n") ;
@@ -106,7 +106,7 @@ int penalty(Penalty * penalties[], int cnt)
         }
         else if (menu == 4)
         {
-            int no = selectDataNo(penalty, index) ;
+            int no = selectPenaltyDataNo(penalty, index) ;
             if (no == 0) 
             {
                 printf("=> 취소됨!\n") ;

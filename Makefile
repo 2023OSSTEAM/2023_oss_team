@@ -8,7 +8,7 @@
 # 	gcc -o ladder laddergame.c
 
 all: main.c laddergame.c user.c penalty.c game.c
-	gcc -o main mian.c laddergame.c user.c penalty.c game.c
+	gcc -o main main.c laddergame.c user.c penalty.c game.c
 
 clean:
 	rm -rf main

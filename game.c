@@ -1,27 +1,4 @@
 #include "laddergame.h"
-
-const int num_of_users ;
-
-#define LINE num_of_users           // 라인수를 증가 시킬 수 있습니다.
-#define MAX (LINE * 4)
-
-void
-laddergame(int * participants, int penalty)
-{
-    num_of_users = participants ;
-    int * MAP[20][MAX] ;
-    int Select ;
-    printf("출발점 설정 ( 1 ~ %d ) : ", LINE) ;
-    scanf("%d", &Select) ;
-    Select-- ;
-    system("pause") ;
-    system("cls") ;  
-    
-    VerticalSet(MAP) ;
-    HorizonSet(MAP) ;
-    PrintLine(MAP) ;     
-    LadderStart(MAP, Select) ;    
-}
  
 // 텍스트 칼라 출력
 void textcolor(int color_number)
@@ -58,13 +35,13 @@ int baserand(int x, int y)
     return tmp ;
 }
  
-void VerticalSet(int * MAP[][])
+void VerticalSet(int * MAP[][], int num_of_users)
 {
     int i, j ;
     // 직선 긋기
     for (i = 0 ; i < 20 ; i++)
     {
-        for( j = 0 ; j < MAX ; j++)
+        for( j = 0 ; j < num_of_users * 4 ; j++)
         {
             if (j % 4 == 0)
                 MAP[i][j] = 5 ;  
@@ -74,14 +51,13 @@ void VerticalSet(int * MAP[][])
     }
 }
 
-void HorizonSet(int * MAP[][])
+void HorizonSet(int * MAP[][], int num_of_users)
 {
     int i, j ;    
     int x, y ;
     for ( i = 0 ; i < 20 ; i++) 
-    { 
-        // 선 긋기
-        x = baserand(0, LINE - 2) * 4 ;
+    {
+        x = baserand(0, num_of_users - 2) * 4 ;
         y = baserand(1, 19) ;  
         if (MAP[y][x + 4] == 5 && MAP[y][x - 4] == 5) 
         {
@@ -97,12 +73,12 @@ void HorizonSet(int * MAP[][])
     }
 }
  
-void PrintLine(int * MAP[][])
+void PrintLine(int * MAP[][], int num_of_users)
 {
     int i, j ;
     for (i = 0 ; i < 20 ; i++) 
     {
-        for (j = 0 ; j < MAX ; j++) 
+        for (j = 0 ; j < num_of_users * 4 ; j++) 
         {
             switch(MAP[i][j]) 
             {
@@ -119,18 +95,18 @@ void PrintLine(int * MAP[][])
         printf("\n") ;
     }
     printf("\n") ;
-    for ( i = 1 ; i < LINE + 1 ; i++) 
+    for ( i = 1 ; i < num_of_users + 1 ; i++) 
     {
         printf("%-4d", i) ;
     }
     printf("\n\n") ;
 }
  
-void LadderStart(int *MAP[][], int Select)
+void LadderStart(int *MAP[][], int select)
 {
     int i ;
     int x, y ;
-    x = Select * 4;
+    x = select * 4;
     y = 0 ;
     for (y = 0 ; y < 20 ; y++)
     {
@@ -164,5 +140,5 @@ void LadderStart(int *MAP[][], int Select)
  
     textcolor(WHITE) ;
     gotoxy(0, 22) ;
-    printf("%d 번 당첨 \n", (x / 4) + 1) ;
+    printf("%d번 당첨 \n", (x / 4) + 1) ;
 }
