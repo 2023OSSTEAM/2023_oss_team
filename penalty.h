@@ -1,15 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-typedef struct {
+struct _Penalty {
     char penaltyName[20] ;
     char period[8] ;
-} Penalty ;
+} ;
 
+typedef struct _Penalty Penalty ;
 
 int createPenalty(Penalty * u) ;
 void listPenalty(Penalty * u[], int count) ;
 int updatePenalty(Penalty * u) ;
-int selectMenu() ;
-int selectDataNo(Penalty[] * penalty, int count) ;
+int selectPenaltyMenu() ;
+int selectDataNo(Penalty * penalty[], int count) ;
+
+int penalty(Penalty * penalties[], int cnt) ;

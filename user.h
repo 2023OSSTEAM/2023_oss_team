@@ -1,14 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
+struct _User {
     char name[20] ;
     char number[8] ;
     char penalty[30] ;
-} User;
+} ;
+
+typedef struct _User User ;
 
 int insertUser(User * u ) ;
 void listUser(User * u[], int count) ;
 int updateUser(User * u ) ;
-int selectMenu() ;
-int selectDataNo(User * user[],int count) ;
+int selectUserMenu() ;
+int selectDataNo(User * user[], int count) ;
+
+int user(User * users[], int cnt) ;
