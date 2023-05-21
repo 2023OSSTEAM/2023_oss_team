@@ -1,18 +1,18 @@
 #include "laddergame.h"
 
-void playgame(User * users, int num_of_users, Penalty * penalties, int num_of_penalties)
+void playgame(User * users[], int num_of_users, Penalty * penalties[], int num_of_penalties)
 {
-    int * participants[max];
+    int * participants[MAX];
     int penalty = 6 ;
     int penalty_taker ;
     char save ;
 
-    participants = setUser(users, num_of_users) ;
+    memcpy(participants, setUser(users, num_of_users), sizeof(setUsers(users, num_of_users))) ;
     penalty = setPenalty(penalties, num_of_penalties) ;
     penalty_taker = laddergame(participants, penalty) ;
 
     printf("Penalty Taker's Info :\n") ;
-    printf("Name : %s\nNumber : %sPenalty : %sPeriod : %s\n\n", users[penalty_taker].name, users[penalty_taker].number, penalties[penalty].penaltyName, penalties[penalty].period) ;
+    printf("Name : %s\nNumber : %sPenalty : %sPeriod : %s\n\n", users[penalty_taker]->name, users[penalty_taker]->number, penalties[penalty]->penaltyName, penalties[penalty]->period) ;
 
     printf("Do you want to save the result? (y/n) : ") ;
     scanf("%c", &save) ;
@@ -21,52 +21,56 @@ void playgame(User * users, int num_of_users, Penalty * penalties, int num_of_pe
         time_t now = time(NULL) ;
         struct tm * t = localtime(&now) ;
         char filename[7] ;
-        sprintf(date, "%2d%2d%2d", t->tm_year % 100, t->tm_mon + 1, t->tm_mday) ;
+        sprintf(filename, "%2d%2d%2d", t->tm_year % 100, t->tm_mon + 1, t->tm_mday) ;
 
         FILE * fp = fopen(filename, "a") ;
         for (int i = 0 ; i < num_of_users ; i++)
         {
-            fprintf(fp, "%s %s %s %s", ) ;
+            
+            if (*(participants[i]) == penalty_taker)
+                fprintf(fp, "%s %s %s %s", users[*(participants[i])]->name, users[*(participants[i])]->number, penalties[*(participants[i])]->penaltyName, penalties[*(participants[i])]->period) ;
+            else
+                fprintf(fp, "%s %s - -", users[*(participants[i])]->name, users[*(participants[i])]->number) ;
         }
         fclose(fp) ;
     }
 }
 
-int * setUser(User * users, int num_of_users)
+int * setUser(User * users[], int num_of_users)
 {
-    char * indexs[45] ;
-    int * participants[max] ;
+    char * indexes[45] ;
+    int * participants[MAX] ;
 
     listUser(users, num_of_users) ;
     printf("\n>>> Choose the index numbers of user to use under 10(like 8,4-14) : ") ;
     scanf("%s", indexes) ;
-    participants = parser(indexes) ;
+    memcpy(participants, parser(indexes), sizeof(parser(indexes))) ;
 
     return participants ;
 }
 
-int * parser(char * indexes)
+int * parser(char * indexes[])
 {
-    int * participants[max] ;
-    int length = sizeof(ledexes) ;
+    int * participants[MAX] ;
+    int length = sizeof(indexes) ;
     int pre = 0 ;
     int cnt = 0 ;
-    char del = '' ;
+    char del = ' ' ;
 
     memset(participants, '\0', sizeof(participants)) ;
     for (int i = 0 ; i < length ; i++)
     {
-        if (cnt >= max - 1)
+        if (cnt >= MAX - 1)
             printf("Only 10 people could participate, %d is the last member", pre) ;
 
-        if (indexes[i].isDigit())
+        if (isdigit(indexes[i]))
         {
             if (del == '-')
-                for (int j = pre ; j <= atoi(indexes[i]) ; j++)
-                    if (isNotExist(participants, j) && cnt < max - 1)
-                        articipants[cnt++] = j ;
-            pre = atoi(indexes[i]) ;
-            del = '' ;
+                for (int j = pre ; j <= atoi(*(indexes[i])) ; j++)
+                    if (isNotExist(participants, j) && cnt < MAX - 1)
+                        participants[cnt++] = j ;
+            pre = atoi(*(indexes[i])) ;
+            del = ' ' ;
         }
         else if (indexes[i] == '-')
         {
@@ -75,7 +79,7 @@ int * parser(char * indexes)
         else if (indexes[i] == ',')
         {
             del = ',' ;
-            if (isNotExist(participants, pre) && cnt < max - 1)
+            if (isNotExist(participants, pre) && cnt < MAX - 1)
                 participants[cnt++] = pre ;
         }
     }
@@ -83,7 +87,7 @@ int * parser(char * indexes)
     return participants ;
 }
 
-bool isNotExist(int * addr, int num)
+bool isNotExist(int * addr[], int num)
 {
     for (int j = 0 ; j < sizeof(addr) ; j++)
         if (num == addr[j])
@@ -91,10 +95,10 @@ bool isNotExist(int * addr, int num)
     return false ;
 }
 
-int setPenalty(Penalty * penalties, int num_of_penalties)
+int setPenalty(Penalty * penalties[], int num_of_penalties)
 {
     int penalty = 0 ;
-    listPenalty(users, num_of_penalties) ;
+    listPenalty(penalties, num_of_penalties) ;
     printf("\n>>> Choose the index number of penalty to use : ") ;
     scanf("%d", &penalty) ;
 
@@ -105,7 +109,7 @@ int laddergame(int * participants, int penalty)
 {
     int penalty_taker ;
     int num_of_users = 0 ;
-    for (int i = 0 ; i < max ; i++)
+    for (int i = 0 ; i < MAX ; i++)
         if (participants[i] != '0')
             num_of_users++ ;
 
@@ -150,10 +154,10 @@ void loadHistory()
     if (fp == NULL)
     {
         printf("File Open Error\n") ;
-        return -1 ;
+        return ;
     }
     printf("%-20s %-8s %-20s %-8s\n", "Name", "Number", "Penalty Name", "Period") ;
-    for (int i = 0 ; i < max ; i++)
+    for (int i = 0 ; i < MAX ; i++)
     {
         if (feof(fp))
             break ;

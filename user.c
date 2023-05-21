@@ -82,7 +82,7 @@ int user(User * users[], int cnt)
         {
             //데이터 조회 (리스트로)
             if (count > 0)
-                listUser(user, index) ;
+                listUser(users, index) ; // count? index?
             else
                 printf("데이터가 없습니다.\n") ;
         }
@@ -93,22 +93,22 @@ int user(User * users[], int cnt)
                 printf("Storage Full: could not add more\n") ;
                 continue;
             }
-            user[index] = (User *)malloc(sizeof(User)) ;
-            count += insertUser(user[index++]) ;
+            users[index] = (User *)malloc(sizeof(User)) ;
+            count += insertUser(users[index++]) ;
         }
         else if (menu == 3)
         {
-            int no = selectUserDataNo(user, index) ;
+            int no = selectUserDataNo(users, index) ;
             if (no == 0)
             {
                 printf("=> 취소됨!\n") ;
                 continue ;
             }
-            updateUser(user[no - 1]) ;
+            updateUser(users[no - 1]) ;
         }
         else if (menu == 4)
         {
-            int no = selectUserDataNo(user, index) ;
+            int no = selectUserDataNo(users, index) ;
             if (no == 0)
             {
                 printf("=> 취소됨!\n") ;
@@ -119,9 +119,9 @@ int user(User * users[], int cnt)
             scanf("%d", &deleteok) ;
             if (deleteok == 1)
             {
-                if(user[no - 1])
-                    free(user[no - 1]) ;
-                user[no - 1] = NULL ;
+                if(users[no - 1])
+                    free(users[no - 1]) ;
+                users[no - 1] = NULL ;
                 count-- ;
             }
         }

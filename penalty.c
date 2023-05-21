@@ -92,7 +92,7 @@ int penalty(Penalty * penalties[], int cnt)
                 continue;
             }
             penalty[index] = (Penalty *)malloc(sizeof(Penalty)) ;
-            count += insertPenalty(penalty[index++]) ;
+            count += createPenalty(penalty[index++]) ;
         }
         else if (menu == 3)
         {

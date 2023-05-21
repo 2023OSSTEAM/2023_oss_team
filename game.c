@@ -35,7 +35,7 @@ int baserand(int x, int y)
     return tmp ;
 }
  
-void VerticalSet(int * MAP[][], int num_of_users)
+void VerticalSet(int * MAP[], int num_of_users)
 {
     int i, j ;
     // 직선 긋기
@@ -51,7 +51,7 @@ void VerticalSet(int * MAP[][], int num_of_users)
     }
 }
 
-void HorizonSet(int * MAP[][], int num_of_users)
+void HorizonSet(int * MAP[], int num_of_users)
 {
     int i, j ;    
     int x, y ;
@@ -73,7 +73,7 @@ void HorizonSet(int * MAP[][], int num_of_users)
     }
 }
  
-void PrintLine(int * MAP[][], int num_of_users)
+void PrintLine(int * MAP[], int num_of_users)
 {
     int i, j ;
     for (i = 0 ; i < 20 ; i++) 
@@ -102,7 +102,7 @@ void PrintLine(int * MAP[][], int num_of_users)
     printf("\n\n") ;
 }
  
-void LadderStart(int *MAP[][], int select)
+int LadderStart(int *MAP[], int select)
 {
     int i ;
     int x, y ;
@@ -141,4 +141,6 @@ void LadderStart(int *MAP[][], int select)
     textcolor(WHITE) ;
     gotoxy(0, 22) ;
     printf("%d번 당첨 \n", (x / 4) + 1) ;
+
+    return x / 4 + 1 ;
 }

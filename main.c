@@ -14,7 +14,7 @@
   3-4 save
   3-5 get history?
 */
-void main()
+int main()
 {
   int menu ;
   User * users[100] ;
