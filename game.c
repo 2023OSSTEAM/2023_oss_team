@@ -41,12 +41,12 @@ void VerticalSet(int * MAP[], int num_of_users)
     // 직선 긋기
     for (i = 0 ; i < 20 ; i++)
     {
-        for( j = 0 ; j < num_of_users * 4 ; j++)
+        for( j = 0 ; j < (num_of_users * 4) ; j++)
         {
             if (j % 4 == 0)
-                MAP[i][j] = 5 ;  
+                MAP[i][j] = 5 ;     // |
             else
-                MAP[i][j] = 0 ;
+                MAP[i][j] = 0 ;     // 
         }
     }
 }
@@ -58,27 +58,27 @@ void HorizonSet(int * MAP[], int num_of_users)
     for ( i = 0 ; i < 20 ; i++) 
     {
         x = baserand(0, num_of_users - 2) * 4 ;
-        y = baserand(1, 19) ;  
-        if (MAP[y][x + 4] == 5 && MAP[y][x - 4] == 5) 
+        y = baserand(1, 18) ;  
+        if (MAP[y][x + 4] == 5 && MAP[y][x - 4] == 5)   // |
         {
             j = x ;
-            MAP[y][j++] = 25 ;
+            MAP[y][j++] = 25 ;      // ㅏ
             for ( ; j < x + 4 ; j++)
             {
-                MAP[y][j] = 6 ;
+                MAP[y][j] = 6 ;     // ㅡ
             }
  
-            MAP[y][j] = 23 ;
+            MAP[y][j] = 23 ;        // ㅓ
         }
     }
 }
  
-void PrintLine(int * MAP[], int num_of_users)
+void PrintLine(int * MAP[], int participants[], int num_of_users)
 {
     int i, j ;
     for (i = 0 ; i < 20 ; i++) 
     {
-        for (j = 0 ; j < num_of_users * 4 ; j++) 
+        for (j = 0 ; j < (num_of_users * 4) ; j++) 
         {
             switch(MAP[i][j]) 
             {
@@ -97,7 +97,7 @@ void PrintLine(int * MAP[], int num_of_users)
     printf("\n") ;
     for ( i = 1 ; i < num_of_users + 1 ; i++) 
     {
-        printf("%-4d", i) ;
+        printf("%-4d", participants[i-1]) ;
     }
     printf("\n\n") ;
 }
@@ -110,7 +110,7 @@ int LadderStart(int *MAP[], int select)
     y = 0 ;
     for (y = 0 ; y < 20 ; y++)
     {
-        if (MAP[y][x] == 25 ) 
+        if (MAP[y][x] == 25) 
         {
             for (i = x ; i < x + 4 ; i++) 
             {
@@ -140,7 +140,6 @@ int LadderStart(int *MAP[], int select)
  
     textcolor(WHITE) ;
     gotoxy(0, 22) ;
-    printf("%d번 당첨 \n", (x / 4) + 1) ;
 
-    return x / 4 + 1 ;
+    return x / 4 ;
 }

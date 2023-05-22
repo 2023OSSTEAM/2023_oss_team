@@ -1,5 +1,4 @@
 #include "laddergame.h"
-#include "string.h"
 /*
   Menu
   1 user
@@ -35,8 +34,8 @@ int main()
       num_of_penalties = penalty(penalties) ;
     else if (menu == 3)
       playgame(users, num_of_users, penalties, num_of_penalties) ;
-   // else if (menu == 4)
-     // loadHistory() ;
+    else if (menu == 4)
+      loadHistory() ;
     else
       printf("Select between 0 to 3\n\n") ;  
   }

@@ -1,5 +1,5 @@
 #include "laddergame.h"
-#include "string.h"
+
 int participants[MAX] ;
 
 void playgame(User * users[], int num_of_users, Penalty * penalties[], int num_of_penalties)
@@ -9,8 +9,9 @@ void playgame(User * users[], int num_of_users, Penalty * penalties[], int num_o
 
     setUser(users, num_of_users) ;
     penalty = setPenalty(penalties, num_of_penalties) ;
-//    penalty_taker = laddergame(participants, penalty) ;
-//    saveResult(users, penalties, penalty, penalty_taker) ;
+    penalty_taker = laddergame(participants) ;
+    // printf("Penalty Taker's Info : %d\n", penalty_taker) ;
+    saveResult(users, penalties, penalty, participants[penalty_taker]) ;
 }
 
 void setUser(User * users[], int num_of_users)
@@ -36,7 +37,7 @@ void parser(char indexes[])
         if (cnt >= MAX - 1)
             printf("Only 10 people could participate, %d is the last member", pre) ;
 
-       /* if (isdigit(indexes[i]))
+        if (isdigit(indexes[i]))
         {
             if (del == '-')
                 for (int j = pre ; j <= indexes[i] - 48 ; j++)
@@ -44,7 +45,7 @@ void parser(char indexes[])
                         participants[cnt++] = j ;
             pre = indexes[i] - 48 ;
             del = ' ' ;
-        }*/
+        }
         else if (indexes[i] == '-')
         {
             del = '-' ;
@@ -56,7 +57,8 @@ void parser(char indexes[])
                 participants[cnt++] = pre  ;
         }
     }
-    printf("%s\n", indexes) ;
+//    printf("%s\n", indexes) ;
+    printf("participants: ") ;
     for (int i = 0 ; i < cnt ; i++)
         printf("%d ", participants[i]) ;
     printf("\n");
@@ -79,8 +81,8 @@ int setPenalty(Penalty * penalties[], int num_of_penalties)
 
     return penalty;
 }
-/*
-int laddergame(int * participants, int penalty)
+
+int laddergame(int * participants)
 {
     int penalty_taker ;
     int num_of_users = 0 ;
@@ -97,25 +99,16 @@ int laddergame(int * participants, int penalty)
     int select = rand() % num_of_users ;
 
     system("pause") ;
-    system("cls") ;  // should it be needed?
-    /*
-    for (int i = 0 ; i < num_of_users + 1 ; i++) 
-    {
-        char * write = "" ;
-        if (i == select)
-            write = "LOSE" ;
-        printf("%-4s", write) ;
-    }
-    printf("\n") ;
-    */
-/* 
-VerticalSet(MAP, num_of_users) ;
+    system("cls") ;  
+
+    VerticalSet(MAP, num_of_users) ;
     HorizonSet(MAP, num_of_users) ;
-    PrintLine(MAP, num_of_users) ;     
+    PrintLine(MAP, participants, num_of_users) ;     
     penalty_taker = LadderStart(MAP, select) ;
 
-    free(MAP[0]) ;
-    free(MAP) ;
+    // printf("%d", penalty_taker) ;
+    // free(MAP[0]) ;
+    // free(MAP) ;
 
     return penalty_taker ;
 }
@@ -123,9 +116,9 @@ VerticalSet(MAP, num_of_users) ;
 void saveResult(User * users[], Penalty * penalties[], int penalty, int penalty_taker)
 {
     char save ;
-
-    printf("Penalty Taker's Info :\n") ;
-    printf("Name : %s\nNumber : %sPenalty : %sPeriod : %s\n\n", users[penalty_taker]->name, users[penalty_taker]->number, penalties[penalty]->penaltyName, penalties[penalty]->period) ;
+    penalty_taker = 5 ;
+    printf("Penalty Taker's Info: %d\n", penalty_taker) ;
+    printf("Name:%s\nNumber:%s\nPenalty:%s\nPeriod:%s\n\n", users[penalty_taker]->name, users[penalty_taker]->number, penalties[penalty]->penaltyName, penalties[penalty]->period) ;
 
     printf("Do you want to save the result? (y/n) : ") ;
     scanf("%c", &save) ;
@@ -158,7 +151,7 @@ void loadHistory()
     FILE * fp = fopen(filename, "r") ;
     if (fp == NULL)
     {
-        printf("File Open Error\n") ;
+        printf("No such File\n") ;
         return ;
     }
     printf("%-20s %-8s %-20s %-8s\n", "Name", "Number", "Penalty Name", "Period") ;
@@ -170,7 +163,7 @@ void loadHistory()
         printf("%-20s %-8s %-20s %-8s\n", temp[1], temp[2], temp[3], temp[4]) ;
     }
     fclose(fp) ;
-}*/
+}
 
 int selectMenu()
 {
