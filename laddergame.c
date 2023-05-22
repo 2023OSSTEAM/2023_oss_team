@@ -6,35 +6,11 @@ void playgame(User * users[], int num_of_users, Penalty * penalties[], int num_o
 {
     int penalty = 6 ;
     int penalty_taker ;
-    char save ;
 
     setUser(users, num_of_users) ;
     penalty = setPenalty(penalties, num_of_penalties) ;
     penalty_taker = laddergame(participants, penalty) ;
-
-    printf("Penalty Taker's Info :\n") ;
-    printf("Name : %s\nNumber : %sPenalty : %sPeriod : %s\n\n", users[penalty_taker]->name, users[penalty_taker]->number, penalties[penalty]->penaltyName, penalties[penalty]->period) ;
-
-    printf("Do you want to save the result? (y/n) : ") ;
-    scanf("%c", &save) ;
-    if (save == 'y')
-    {   
-        time_t now = time(NULL) ;
-        struct tm * t = localtime(&now) ;
-        char filename[7] ;
-        sprintf(filename, "%2d%2d%2d", t->tm_year % 100, t->tm_mon + 1, t->tm_mday) ;
-
-        FILE * fp = fopen(filename, "a") ;
-        for (int i = 0 ; i < num_of_users ; i++)
-        {
-            
-            if (participants[i] == penalty_taker)
-                fprintf(fp, "%s %s %s %s", users[participants[i]]->name, users[participants[i]]->number, penalties[participants[i]]->penaltyName, penalties[participants[i]]->period) ;
-            else
-                fprintf(fp, "%s %s - -", users[participants[i]]->name, users[participants[i]]->number) ;
-        }
-        fclose(fp) ;
-    }
+    saveResult(users, penalties, penalty, penalty_taker) ;
 }
 
 void setUser(User * users[], int num_of_users)
@@ -80,6 +56,10 @@ void parser(char indexes[])
                 participants[cnt++] = pre ;
         }
     }
+    printf("%s\n", indexes) ;
+    for (int i = 0 ; i < cnt ; i++)
+        printf("%d ", participants[i]) ;
+    printf("\n");
 }
 
 bool isNotExist(int * addr, int num)
@@ -105,7 +85,7 @@ int laddergame(int * participants, int penalty)
     int penalty_taker ;
     int num_of_users = 0 ;
     for (int i = 0 ; i < MAX ; i++)
-        if (participants[i] != '0')
+        if (participants[i] != '\0')
             num_of_users++ ;
 
     int ** MAP ;
@@ -118,7 +98,7 @@ int laddergame(int * participants, int penalty)
 
     system("pause") ;
     system("cls") ;  // should it be needed?
-    
+    /*
     for (int i = 0 ; i < num_of_users + 1 ; i++) 
     {
         char * write = "" ;
@@ -126,7 +106,8 @@ int laddergame(int * participants, int penalty)
             write = "LOSE" ;
         printf("%-4s", write) ;
     }
-
+    printf("\n") ;
+    */
     VerticalSet(MAP, num_of_users) ;
     HorizonSet(MAP, num_of_users) ;
     PrintLine(MAP, num_of_users) ;     
@@ -136,6 +117,34 @@ int laddergame(int * participants, int penalty)
     free(MAP) ;
 
     return penalty_taker ;
+}
+
+void saveResult(User * users[], Penalty * penalties[], int penalty, int penalty_taker)
+{
+    char save ;
+
+    printf("Penalty Taker's Info :\n") ;
+    printf("Name : %s\nNumber : %sPenalty : %sPeriod : %s\n\n", users[penalty_taker]->name, users[penalty_taker]->number, penalties[penalty]->penaltyName, penalties[penalty]->period) ;
+
+    printf("Do you want to save the result? (y/n) : ") ;
+    scanf("%c", &save) ;
+    if (save == 'y')
+    {   
+        time_t now = time(NULL) ;
+        struct tm * t = localtime(&now) ;
+        char filename[7] ;
+        sprintf(filename, "%2d%2d%2d", t->tm_year % 100, t->tm_mon + 1, t->tm_mday) ;
+
+        FILE * fp = fopen(filename, "a") ;
+        for (int i = 0 ; i < MAX ; i++)
+        {
+            if (participants[i] == penalty_taker)
+                fprintf(fp, "%s %s %s %s", users[participants[i]]->name, users[participants[i]]->number, penalties[participants[i]]->penaltyName, penalties[participants[i]]->period) ;
+            else
+                fprintf(fp, "%s %s - -", users[participants[i]]->name, users[participants[i]]->number) ;
+        }
+        fclose(fp) ;
+    }
 }
 
 void loadHistory()
@@ -166,14 +175,14 @@ int selectMenu()
 {
     int menu ;
     printf("\n ***************** \n") ;
+    printf("  Main Menu\n") ;
     printf("1. User Setting\n") ;
     printf("2. Penalty Setting\n") ;
     printf("3. Run Game\n") ;
     printf("4. Game History\n") ;
     printf("0. Exit \n") ;
-    printf(" 이용할 메뉴입력 >>") ;
+    printf(" Write the Number of Menu to Use >> ") ;
     scanf("%d", &menu) ;
-    printf("\n ***************** \n") ;
 
-    return menu ;    
+    return menu ;
 }

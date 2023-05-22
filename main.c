@@ -29,9 +29,9 @@ int main()
     if (menu == 0)
       break ;
     else if (menu == 1)
-      num_of_users = user(users, num_of_users) ;
+      num_of_users = user(users) ;
     else if (menu == 2)
-      num_of_penalties = penalty(penalties, num_of_penalties) ;
+      num_of_penalties = penalty(penalties) ;
     else if (menu == 3)
       playgame(users, num_of_users, penalties, num_of_penalties) ;
     else if (menu == 4)

@@ -13,5 +13,5 @@ void parser(char * indexes) ;
 int setPenalty(Penalty * penalties[], int num_of_penalties) ;
 int laddergame(int * participants, int penalty) ;
 void loadHistory() ;
-
+void saveResult(User * users[], Penalty * penalties[], int penalty, int penalty_taker) ;
 int selectMenu() ;

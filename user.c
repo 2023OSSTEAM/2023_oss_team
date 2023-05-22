@@ -2,34 +2,34 @@
 
 int insertUser(User * u)
 {
-    printf("이름은?") ;
+    printf("Name? ") ;
     scanf("%s", u->name) ;
-    printf("학번은?") ;
+    printf("Student Number? ") ;
     scanf("%s", u->number) ;
-    printf("=>사용자가 추가되었습니다!\n") ;
+    printf("=>User Successfully Added!\n") ;
     
     return 1 ;
 }
 
-void listUser(User * u[], int count)
+void listUser(User * users[], int count)
 {
-	printf("\n No Number Name Penalty \n") ;
+	printf("\nNo Number Name Penalty \n") ;
 	printf("========================== \n") ;
 	for (int i = 0 ; i < count ; i++)
     {
-        if(u[i] == NULL)
+        if(users[i] == NULL)
             continue ;
 
-        printf("%d %s %s %s \n", i + 1, u[i]->number, u[i]->name, u[i]->penalty) ;
+        printf("%d %s %s\n", i + 1, users[i]->number, users[i]->name) ;
 	}
 	printf("\n") ;
 }
 
 int updateUser(User * u)
 {
-    printf("변경 후  이름은?\n") ;
+    printf("New name? \n") ;
     scanf("%s", u->name) ;
-    printf("변경 후 학번은?\n") ;
+    printf("New Student Number? \n") ;
     scanf("%s", u->number) ;
     return 1 ;
 }
@@ -38,42 +38,80 @@ int selectUserMenu()
 {
     int menu ;
     printf("\n ***************** \n") ;
-    printf("1. User  조회 \n") ;
-    printf("2. User 추가 \n") ;
-    printf("3. User정보 수정 \n") ;
-    printf("4. User 삭제  \n") ;
-    printf(" 이용할 메뉴입력 >>") ;
+    printf(" (1) User Menu\n") ;
+    printf("1. User List \n") ;
+    printf("2. User Addition \n") ;
+    printf("3. User Update \n") ;
+    printf("4. User Remove  \n") ;
+    printf("5. Save User List\n") ;
+    printf("0. Go Back to Main Menu\n") ;
+    printf(" Write the Number to Use >> ") ;
     scanf("%d", &menu) ;
 
     return menu ;    
 }
 
-int selectUserDataNo(User * user[], int count)
+int selectUserDataNo(User * users[], int count)
 {
     int num ;
-    listUser(user, count) ;
-    printf("번호는? (취소 :0)") ;
+    listUser(users, count) ;
+    printf("Number? (cancel :0) ") ;
     scanf("%d", &num) ;
     return num ;
 }
 
-int user(User * users[], int cnt)
+int saveUserList(User * users[], int count)
 {
-	int count = cnt ;
-	int result = 0 ;
+    FILE * fp = fopen(userfilename, "wt") ;
+    for (int i = 0 ; i < count ; i++)
+    {
+        if (users[i] == NULL)
+            continue ;
+        fprintf(fp, "%d %s %s\n", i + 1, users[i]->name, users[i]->number) ;
+    }
+    fclose(fp) ;
+    return 1 ;
+}
+
+int loadUserList(User * users[])
+{
+    int i = 0 ;
+    FILE * fp = fopen(userfilename, "r") ;
+    if (fp == NULL)
+    {
+        printf("File Open Error ") ;
+        return -1 ;
+    }
+    for ( ; ; )
+    {
+        if(feof(fp))
+            break ;
+        fscanf(fp, "%d %s %s\n", &i, users[i]->name, users[i]->number) ;
+    }
+    fclose(fp) ;
+    return i ; 
+}
+
+int user(User * users[])
+{
 	int index = 0 ;
 	int menu = 0 ;
+    if (-1 < (index = loadUserList(users)))
+        printf("=> Loading Success!\n") ;
+    else
+        printf("=> No Such File\n") ;
+	int count = index ;
 
     while(1)
     {
         menu = selectUserMenu() ;
         if (menu == 0) 
             break ;
-        if (menu == 1 || menu ==3 || menu == 4)
+        if (menu == 1 || menu == 3 || menu == 4)
         {
-            if (count == 0) 
+            if (count == 0 && index == 0) 
             {
-                printf("No user stored, need to add user\n") ;
+                printf("No user stored, need to add user.\n") ;
                 continue ;
             }
         }
@@ -84,7 +122,7 @@ int user(User * users[], int cnt)
             if (count > 0)
                 listUser(users, index) ; // count? index?
             else
-                printf("데이터가 없습니다.\n") ;
+                printf("List is Empty.\n") ;
         }
         else if (menu == 2)
         {   //데이터 추가
@@ -101,7 +139,7 @@ int user(User * users[], int cnt)
             int no = selectUserDataNo(users, index) ;
             if (no == 0)
             {
-                printf("=> 취소됨!\n") ;
+                printf("=> canceled!\n") ;
                 continue ;
             }
             updateUser(users[no - 1]) ;
@@ -111,11 +149,11 @@ int user(User * users[], int cnt)
             int no = selectUserDataNo(users, index) ;
             if (no == 0)
             {
-                printf("=> 취소됨!\n") ;
+                printf("=> canceled!\n") ;
                 continue ;
             }
             int deleteok ;
-            printf("정말로 삭제하시겠습니까?(삭제 :1)") ;
+            printf("Are you sure to remove it? (yes :1) ") ;
             scanf("%d", &deleteok) ;
             if (deleteok == 1)
             {
@@ -125,8 +163,15 @@ int user(User * users[], int cnt)
                 count-- ;
             }
         }
+        else if (menu == 5)
+        {
+            saveUserList(users, count) ;
+            printf("Successfully Loaded\n") ;
+        }
+        else
+            printf("Write the Number between 0 to 5\n") ;
     }
-    printf("User 설정 종료됨!\n") ;
+    printf("User Setting Complete!\n") ;
 
     return count ;
 }
