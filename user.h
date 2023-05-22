@@ -18,6 +18,6 @@ int selectUserMenu() ;
 int selectUserDataNo(User * users[], int count) ;
 
 int saveUserList(User * users[], int count) ;
-int loadUserList(User * users[]) ;
+int loadUserList(User * user) ;
 
 int user(User * users[]) ;

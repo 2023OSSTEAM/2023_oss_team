@@ -1,5 +1,5 @@
 #include "laddergame.h"
-
+#include "string.h"
 int participants[MAX] ;
 
 void playgame(User * users[], int num_of_users, Penalty * penalties[], int num_of_penalties)
@@ -9,8 +9,8 @@ void playgame(User * users[], int num_of_users, Penalty * penalties[], int num_o
 
     setUser(users, num_of_users) ;
     penalty = setPenalty(penalties, num_of_penalties) ;
-    penalty_taker = laddergame(participants, penalty) ;
-    saveResult(users, penalties, penalty, penalty_taker) ;
+//    penalty_taker = laddergame(participants, penalty) ;
+//    saveResult(users, penalties, penalty, penalty_taker) ;
 }
 
 void setUser(User * users[], int num_of_users)
@@ -36,7 +36,7 @@ void parser(char indexes[])
         if (cnt >= MAX - 1)
             printf("Only 10 people could participate, %d is the last member", pre) ;
 
-        if (isdigit(indexes[i]))
+       /* if (isdigit(indexes[i]))
         {
             if (del == '-')
                 for (int j = pre ; j <= indexes[i] - 48 ; j++)
@@ -44,7 +44,7 @@ void parser(char indexes[])
                         participants[cnt++] = j ;
             pre = indexes[i] - 48 ;
             del = ' ' ;
-        }
+        }*/
         else if (indexes[i] == '-')
         {
             del = '-' ;
@@ -79,7 +79,7 @@ int setPenalty(Penalty * penalties[], int num_of_penalties)
 
     return penalty;
 }
-
+/*
 int laddergame(int * participants, int penalty)
 {
     int penalty_taker ;
@@ -108,7 +108,8 @@ int laddergame(int * participants, int penalty)
     }
     printf("\n") ;
     */
-    VerticalSet(MAP, num_of_users) ;
+/* 
+VerticalSet(MAP, num_of_users) ;
     HorizonSet(MAP, num_of_users) ;
     PrintLine(MAP, num_of_users) ;     
     penalty_taker = LadderStart(MAP, select) ;
@@ -169,7 +170,7 @@ void loadHistory()
         printf("%-20s %-8s %-20s %-8s\n", temp[1], temp[2], temp[3], temp[4]) ;
     }
     fclose(fp) ;
-}
+}*/
 
 int selectMenu()
 {

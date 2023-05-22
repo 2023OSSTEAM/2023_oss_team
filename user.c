@@ -73,27 +73,23 @@ int saveUserList(User * users[], int count)
     return 1 ;
 }
 
-int loadUserList(User * users[])
+int loadUserList(User * users)
 {
-    int i = 0 ;
+    int i = 0, count =0;
     FILE * fp = fopen(userfilename, "r") ;
-    printf("hi1\n") ;
+
     if (fp == NULL)
     {
-        printf("File Open Error ") ;
+        printf("\n 파일없음 \n ") ;
         return -1 ;
     }
-    printf("hi2\n") ;
-    for ( ; ; )
+    for (i=0;i<100; i++ )
     {
         if(feof(fp))
             break ;
-        printf("hi3\n") ;
-        fscanf(fp, "%d %s %s\n", &i, users[i]->name, users[i]->number) ;
+        fscanf(fp, "%d %s %s\n", &i+1, users[i].name, users[i].number) ;
     }
-    printf("hi4\n") ;
-    fclose(fp) ;
-    printf("hi5\n") ;
+    fclose(fp);
     return i ; 
 }
 
@@ -102,8 +98,14 @@ int user(User * users[])
 	int index = 0 ;
 	int menu = 0 ;
     printf("hi\n") ;
-    if (-1 < (index = loadUserList(users)))
+    User userList[100];
+    
+    if (-1 < (index = loadUserList(userList))){
         printf("=> 'userList' Loading Success!\n") ;
+         for(int i=0; i<index; i++){
+            users[i] = &userList[i];
+         }
+    }
     else
         printf("=> No Such File\n") ;
 	int count = index ;
@@ -181,3 +183,4 @@ int user(User * users[])
 
     return count ;
 }
+
