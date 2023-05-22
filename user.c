@@ -77,18 +77,23 @@ int loadUserList(User * users[])
 {
     int i = 0 ;
     FILE * fp = fopen(userfilename, "r") ;
+    printf("hi1\n") ;
     if (fp == NULL)
     {
         printf("File Open Error ") ;
         return -1 ;
     }
+    printf("hi2\n") ;
     for ( ; ; )
     {
         if(feof(fp))
             break ;
+        printf("hi3\n") ;
         fscanf(fp, "%d %s %s\n", &i, users[i]->name, users[i]->number) ;
     }
+    printf("hi4\n") ;
     fclose(fp) ;
+    printf("hi5\n") ;
     return i ; 
 }
 
@@ -96,8 +101,9 @@ int user(User * users[])
 {
 	int index = 0 ;
 	int menu = 0 ;
+    printf("hi\n") ;
     if (-1 < (index = loadUserList(users)))
-        printf("=> Loading Success!\n") ;
+        printf("=> 'userList' Loading Success!\n") ;
     else
         printf("=> No Such File\n") ;
 	int count = index ;

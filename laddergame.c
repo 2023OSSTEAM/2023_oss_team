@@ -18,7 +18,7 @@ void setUser(User * users[], int num_of_users)
     char indexes[45] ;
 
     listUser(users, num_of_users) ;
-    printf("\n>>> Choose the index numbers of user to use under 10(like 8,4-14) : ") ;
+    printf("\n>>> Choose the index numbers of user to use under 20 (like 2,4-7) : ") ;
     scanf("%s", indexes) ;
     parser(indexes) ;
 }
@@ -39,10 +39,10 @@ void parser(char indexes[])
         if (isdigit(indexes[i]))
         {
             if (del == '-')
-                for (int j = pre ; j <= indexes[i] + 48 ; j++)
+                for (int j = pre ; j <= indexes[i] - 48 ; j++)
                     if (isNotExist(participants, j) && cnt < MAX - 1)
                         participants[cnt++] = j ;
-            pre = indexes[i] + 48 ;
+            pre = indexes[i] - 48 ;
             del = ' ' ;
         }
         else if (indexes[i] == '-')
@@ -53,7 +53,7 @@ void parser(char indexes[])
         {
             del = ',' ;
             if (isNotExist(participants, pre) && cnt < MAX - 1)
-                participants[cnt++] = pre ;
+                participants[cnt++] = pre  ;
         }
     }
     printf("%s\n", indexes) ;
@@ -66,8 +66,8 @@ bool isNotExist(int * addr, int num)
 {
     for (int j = 0 ; j < MAX ; j++)
         if (num == addr[j])
-            return true ;
-    return false ;
+            return false ;
+    return true ;
 }
 
 int setPenalty(Penalty * penalties[], int num_of_penalties)

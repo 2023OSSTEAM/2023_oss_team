@@ -94,11 +94,10 @@ int loadPenaltyList(Penalty * penalties[])
 
 int penalty(Penalty * penalties[])
 {
-	int result = 0 ;
 	int index = 0 ;
 	int menu = 0 ;  
     if (-1 < (index = loadPenaltyList(penalties)))
-        printf("=> Loading Success!\n") ;
+        printf("=> 'penaltyList' Loading Success!\n") ;
     else
         printf("=> No Such File\n") ;
 	int count = index ;
