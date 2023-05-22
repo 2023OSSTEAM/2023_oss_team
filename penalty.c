@@ -73,31 +73,38 @@ int savePenaltyList(Penalty * penalties[], int count)
     return 1 ;
 }
 
-int loadPenaltyList(Penalty * penalties[])
+int loadPenaltyList(Penalty penalties[])
 {
-    int i = 0 ;
+    int i = 0, count =0;
     FILE * fp = fopen(penaltyfilename, "r") ;
+
     if (fp == NULL)
     {
-        printf("File Open Error ") ;
+        printf("\n 파일없음 \n ") ;
         return -1 ;
     }
-    for ( ; ; )
+    for (i=0;i<100; i++ )
     {
         if(feof(fp))
             break ;
-        fscanf(fp, "%d %s %s\n", &i, penalties[i]->penaltyName, penalties[i]->period) ;
+        fscanf(fp, "%d %s %s\n", &i+1, penalties[i].penaltyName, penalties[i].period) ;
     }
-    fclose(fp) ;
+    fclose(fp);
     return i ; 
 }
+
 
 int penalty(Penalty * penalties[])
 {
 	int index = 0 ;
 	int menu = 0 ;  
-    if (-1 < (index = loadPenaltyList(penalties)))
+    Penalty penalyList[100];
+    if (-1 < (index = loadPenaltyList(penalyList))){
         printf("=> 'penaltyList' Loading Success!\n") ;
+        for(int i=0; i<index; i++){
+            penalties[i] = &penalyList[i];
+         }
+    }
     else
         printf("=> No Such File\n") ;
 	int count = index ;

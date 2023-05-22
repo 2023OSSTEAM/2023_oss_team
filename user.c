@@ -73,7 +73,7 @@ int saveUserList(User * users[], int count)
     return 1 ;
 }
 
-int loadUserList(User * users)
+int loadUserList(User users[])
 {
     int i = 0, count =0;
     FILE * fp = fopen(userfilename, "r") ;

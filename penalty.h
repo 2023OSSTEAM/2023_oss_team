@@ -17,6 +17,6 @@ int selectPenaltyMenu() ;
 int selectPenaltyDataNo(Penalty * penalty[], int count) ;
 
 int savePenaltyList(Penalty * penalties[], int count) ;
-int loadPenaltyList(Penalty * penalties[]) ;
+int loadPenaltyList(Penalty *penaltyList) ;
 
 int penalty(Penalty * penalties[]) ;
